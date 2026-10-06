@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockFlow - Inventory Management</title>
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOGIN MODAL / FORM OVERLAY -->
+  <div class="login-modal" id="loginModal">
+    <div class="login-card">
+      <h2>Welcome to StockFlow</h2>
+      <p class="login-subtitle">Please log in to continue</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="role">Login As</label>
+          <select id="role" required>
+            <option value="Admin">Admin</option>
+            <option value="User">User / Client</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">StockFlow</div>
+    <div class="user-status" id="userStatusSection">
+      <span>StockFlow Client</span>
+      <span class="badge" id="roleBadge">Client</span>
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1>My Inventory</h1>
+        <p class="subtext"><span id="recordCount">4</span> inventory records</p>
+        <p class="info-text">You can view and manage only the items you added.</p>
+      </div>
+      <button class="btn btn-primary" onclick="openAddItemModal()">+ Add item</button>
+    </div>
+
+    <!-- SEARCH BOX SECTION -->
+    <section class="card search-card">
+      <label for="searchInput" class="card-title">Search inventory</label>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by item code, name, category, supplier, or description">
+        <button class="btn btn-primary" onclick="searchInventory()">Search</button>
+      </div>
+    </section>
+
+    <!-- INVENTORY TABLE SECTION -->
+    <section class="card table-card">
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Item code</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Unit price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryBody">
+          <tr>
+            <td>ITM-15</td>
+            <td>Minimalist Razor for mustache and beard</td>
+            <td>Necessity</td>
+            <td>10</td>
+            <td>₱310.49</td>
+            <td class="action-buttons">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>ITM-14</td>
+            <td>Minimalist foldable wallet</td>
+            <td>Personal Accessory</td>
+            <td>50</td>
+            <td>₱98.24</td>
+            <td class="action-buttons">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>ITM-13</td>
+            <td>Microsoft Activation Key</td>
+            <td>Software Product</td>
+            <td>15</td>
+            <td>₱1,500.00</td>
+            <td class="action-buttons">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>ITM-12</td>
+            <td>Wireless Mouse</td>
+            <td>Computer Accessory</td>
+            <td>9999999</td>
+            <td>₱800.00</td>
+            <td class="action-buttons">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const role = document.getElementById('role').value;
+      document.getElementById('roleBadge').textContent = role;
+      document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function logout() {
+      document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    function searchInventory() {
+      const filter = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#inventoryBody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    }
+
+    function openAddItemModal() {
+      alert("Add item functionality can be integrated here!");
+    }
+  </script>
+</body>
+</html>
